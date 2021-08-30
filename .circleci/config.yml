@@ -8,5 +8,5 @@ workflows:
   test:
     jobs:
       - node/run:
-          app-dir: ~/project/project-6 
-          npm-run: test 
+          app-dir: project
+          npm-run: test:ci

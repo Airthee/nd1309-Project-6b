@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "lite-server",
-    "test": "npm run ganache:dev & sleep 5 && npx truffle test",
-    "ganache:dev": "npx ganache-cli -m \"spirit supply whale amount human item harsh scare congress discover talent hamster\""
+    "test": "truffle test",
+    "ganache:dev": "ganache-cli -m \"spirit supply whale amount human item harsh scare congress discover talent hamster\"",
+    "test:ci": "npm run ganache:dev & sleep 5 && npm run test"
   },
   "keywords": [],
   "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
   "license": "MIT",
   "devDependencies": {
-    "lite-server": "^2.6.1"
+    "ganache-cli": "^6.12.2",
+    "lite-server": "^2.6.1",
+    "truffle": "^5.4.8"
   }
 }

@@ -41,6 +41,14 @@ contract("SupplyChain", function (accounts) {
   console.log("Retailer: accounts[3] ", accounts[3]);
   console.log("Consumer: accounts[4] ", accounts[4]);
 
+  it('should have an owner', async () => {
+    const supplyChain = await SupplyChain.deployed();
+
+    const ownerResponse = await supplyChain.owner();
+
+    assert.equal(ownerResponse, ownerID, "Owner is incorrect");
+  })
+
   // 1st Test
   it("Testing smart contract function harvestItem() that allows a farmer to harvest coffee", async () => {
     const supplyChain = await SupplyChain.deployed();

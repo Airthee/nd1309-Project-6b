@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.6;
 
-// Define a contract 'Supplychain'
-contract SupplyChain {
-    // Define 'owner'
-    address owner;
+import "../coffeecore/Ownable.sol";
 
+// Define a contract 'Supplychain'
+contract SupplyChain is Ownable {
     // Define a variable called 'upc' for Universal Product Code (UPC)
     uint256 upc;
 
@@ -61,12 +60,6 @@ contract SupplyChain {
     event Shipped(uint256 upc);
     event Received(uint256 upc);
     event Purchased(uint256 upc);
-
-    // Define a modifer that checks to see if msg.sender == owner of the contract
-    modifier onlyOwner() {
-        require(msg.sender == owner, "You are not the contract owner");
-        _;
-    }
 
     // Define a modifer that verifies the Caller
     modifier verifyCaller(address _address) {
@@ -160,16 +153,13 @@ contract SupplyChain {
     // and set 'sku' to 1
     // and set 'upc' to 1
     constructor() payable {
-        owner = msg.sender;
         sku = 1;
         upc = 1;
     }
 
     // Define a function 'kill' if required
-    function kill() public {
-        if (msg.sender == owner) {
-            selfdestruct(payable(owner));
-        }
+    function kill() public onlyOwner {
+        selfdestruct(payable(owner()));
     }
 
     // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'

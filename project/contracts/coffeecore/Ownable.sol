@@ -21,7 +21,7 @@ abstract contract Ownable {
 
     /// Define a function modifier 'onlyOwner'
     modifier onlyOwner() {
-        require(isOwner());
+        require(isOwner(), "You are not the contract owner");
         _;
     }
 
