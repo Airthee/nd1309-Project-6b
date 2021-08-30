@@ -13,8 +13,12 @@
   "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
   "license": "MIT",
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "ganache-cli": "^6.12.2",
     "lite-server": "^2.6.1",
     "truffle": "^5.4.8"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.5.0"
   }
 }
