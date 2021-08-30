@@ -2,6 +2,10 @@
 pragma solidity ^0.8.6;
 
 import "../coffeecore/Ownable.sol";
+import "../coffeeaccesscontrol/FarmerRole.sol/";
+import "../coffeeaccesscontrol/DistributorRole.sol/";
+import "../coffeeaccesscontrol/RetailerRole.sol/";
+import "../coffeeaccesscontrol/ConsumerRole.sol/";
 
 // Define a contract 'Supplychain'
 contract SupplyChain is Ownable {
@@ -17,6 +21,12 @@ contract SupplyChain is Ownable {
     // Define a public mapping 'itemsHistory' that maps the UPC to an array of TxHash,
     // that track its journey through the supply chain -- to be sent from DApp.
     mapping(uint256 => string[]) itemsHistory;
+
+    // Define accesscontrol contracts
+    FarmerRole farmerRole = new FarmerRole();
+    DistributorRole distributorRole = new DistributorRole();
+    RetailerRole retailerRole = new RetailerRole();
+    ConsumerRole consumerRole = new ConsumerRole();
 
     // Define enum 'State' with the following values:
     enum State {
@@ -149,6 +159,24 @@ contract SupplyChain is Ownable {
         _;
     }
 
+    // Define a modifier that checks that the caller is a Distributor
+    modifier onlyDistributor() {
+        require(distributorRole.isDistributor(msg.sender));
+        _;
+    }
+
+    // Define a modifier that checks that the caller is a Retailer
+    modifier onlyRetailer() {
+        require(retailerRole.isRetailer(msg.sender));
+        _;
+    }
+
+    // Define a modifier that checks that the caller is a Consumer
+    modifier onlyConsumer() {
+        require(consumerRole.isConsumer(msg.sender));
+        _;
+    }
+
     // In the constructor set 'owner' to the address that instantiated the contract
     // and set 'sku' to 1
     // and set 'upc' to 1
@@ -189,6 +217,9 @@ contract SupplyChain is Ownable {
 
         // Emit the appropriate event
         emit Harvested(_upc);
+
+        // Add farmer to roles
+        farmerRole.addFarmer(_originFarmerID);
     }
 
     // Define a function 'processtItem' that allows a farmer to mark an item 'Processed'
@@ -256,6 +287,9 @@ contract SupplyChain is Ownable {
 
         // emit the appropriate event
         emit Sold(_upc);
+
+        // Add distributor to roles
+        distributorRole.addDistributor(msg.sender);
     }
 
     // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
@@ -273,12 +307,17 @@ contract SupplyChain is Ownable {
         emit Shipped(_upc);
     }
 
+    // Define a function that allow the distributor to add a new retailer to the roles
+    function addRetailer(address account) public onlyDistributor {
+        retailerRole.addRetailer(account);
+    }
+
     // Define a function 'receiveItem' that allows the retailer to mark an item 'Received'
     // Use the above modifiers to check if the item is shipped
     function receiveItem(uint256 _upc)
         public
         shipped(_upc)
-        // Access Control List enforced by calling Smart Contract / DApp
+        onlyRetailer
     {
         // Update the appropriate fields - ownerID, retailerID, itemState
         Item storage item = items[_upc];
@@ -290,12 +329,17 @@ contract SupplyChain is Ownable {
         emit Received(_upc);
     }
 
+    // Define a function that allow the retailer to add a new consumer to the roles
+    function addConsumer(address account) public onlyRetailer {
+        consumerRole.addConsumer(account);
+    }
+
     // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
     // Use the above modifiers to check if the item is received
     function purchaseItem(uint256 _upc)
         public
         received(_upc)
-        // Access Control List enforced by calling Smart Contract / DApp
+        onlyConsumer
     {
         // Update the appropriate fields - ownerID, consumerID, itemState
         Item storage item = items[_upc];

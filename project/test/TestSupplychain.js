@@ -270,6 +270,7 @@ contract("SupplyChain", function (accounts) {
     const resultBufferTwo = await supplyChain.fetchItemBufferTwo(upc);
 
     // Verify the result set
+    assert.equal(eventEmitted, true, "Invalid event emitted");
     assert.equal(resultBufferOne[0], sku, "Error: Invalid item SKU");
     assert.equal(resultBufferTwo[5], 5, "Error: Invalid state");
   });
@@ -286,6 +287,9 @@ contract("SupplyChain", function (accounts) {
       eventEmitted = true;
     });
 
+    // The distributor adds the retailer
+    await supplyChain.addRetailer(retailerID, { from: distributorID });
+
     // Mark an item as Received by calling function receiveItem()
     await supplyChain.receiveItem(upc, { from: retailerID });
 
@@ -294,6 +298,7 @@ contract("SupplyChain", function (accounts) {
     const resultBufferTwo = await supplyChain.fetchItemBufferTwo(upc);
 
     // Verify the result set
+    assert.equal(eventEmitted, true, "Invalid event emitted");
     assert.equal(resultBufferOne[0], sku, "Error: Invalid item SKU");
     assert.equal(
         resultBufferOne[2],
@@ -312,9 +317,12 @@ contract("SupplyChain", function (accounts) {
     let eventEmitted = false;
 
     // Watch the emitted event Purchased()
-    supplyChain.Received({}, (err, res) => {
+    supplyChain.Purchased({}, (err, res) => {
       eventEmitted = true;
     });
+
+    // The retailer adds the consumer
+    await supplyChain.addConsumer(consumerID, { from: retailerID });
 
     // Mark an item as Purchased by calling function purchaseItem()
     await supplyChain.purchaseItem(upc, { from: consumerID });
@@ -324,6 +332,7 @@ contract("SupplyChain", function (accounts) {
     const resultBufferTwo = await supplyChain.fetchItemBufferTwo(upc);
 
     // Verify the result set
+    assert.equal(eventEmitted, true, "Invalid event emitted");
     assert.equal(resultBufferOne[0], sku, "Error: Invalid item SKU");
     assert.equal(
         resultBufferOne[2],
