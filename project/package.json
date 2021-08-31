@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "lite-server",
+    "parcel:dev": "parcel index.html",
+    "parcel:build": "parcel build index.html",
     "test": "truffle test",
     "ganache:dev": "ganache-cli -m \"spirit supply whale amount human item harsh scare congress discover talent hamster\"",
     "test:ci": "npm run ganache:dev & sleep 5 && npm run test"
@@ -15,10 +16,12 @@
   "devDependencies": {
     "dotenv": "^10.0.0",
     "ganache-cli": "^6.12.2",
-    "lite-server": "^2.6.1",
+    "parcel-bundler": "^1.12.5",
     "truffle": "^5.4.8"
   },
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.5.0"
+    "@truffle/contract": "^4.3.32",
+    "@truffle/hdwallet-provider": "^1.5.0",
+    "web3": "^1.5.2"
   }
 }
