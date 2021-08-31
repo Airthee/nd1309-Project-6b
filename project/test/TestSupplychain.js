@@ -41,13 +41,13 @@ contract("SupplyChain", function (accounts) {
   console.log("Retailer: accounts[3] ", accounts[3]);
   console.log("Consumer: accounts[4] ", accounts[4]);
 
-  it('should have an owner', async () => {
+  it("should have an owner", async () => {
     const supplyChain = await SupplyChain.deployed();
 
     const ownerResponse = await supplyChain.owner();
 
     assert.equal(ownerResponse, ownerID, "Owner is incorrect");
-  })
+  });
 
   // 1st Test
   it("Testing smart contract function harvestItem() that allows a farmer to harvest coffee", async () => {
@@ -287,9 +287,6 @@ contract("SupplyChain", function (accounts) {
       eventEmitted = true;
     });
 
-    // The distributor adds the retailer
-    await supplyChain.addRetailer(retailerID, { from: distributorID });
-
     // Mark an item as Received by calling function receiveItem()
     await supplyChain.receiveItem(upc, { from: retailerID });
 
@@ -301,9 +298,9 @@ contract("SupplyChain", function (accounts) {
     assert.equal(eventEmitted, true, "Invalid event emitted");
     assert.equal(resultBufferOne[0], sku, "Error: Invalid item SKU");
     assert.equal(
-        resultBufferOne[2],
-        retailerID,
-        "Error: Missing or Invalid ownerID"
+      resultBufferOne[2],
+      retailerID,
+      "Error: Missing or Invalid ownerID"
     );
     assert.equal(resultBufferTwo[5], 6, "Error: Invalid state");
     assert.equal(resultBufferTwo[7], retailerID, "Error: Invalid retailerID");
@@ -321,9 +318,6 @@ contract("SupplyChain", function (accounts) {
       eventEmitted = true;
     });
 
-    // The retailer adds the consumer
-    await supplyChain.addConsumer(consumerID, { from: retailerID });
-
     // Mark an item as Purchased by calling function purchaseItem()
     await supplyChain.purchaseItem(upc, { from: consumerID });
 
@@ -335,9 +329,9 @@ contract("SupplyChain", function (accounts) {
     assert.equal(eventEmitted, true, "Invalid event emitted");
     assert.equal(resultBufferOne[0], sku, "Error: Invalid item SKU");
     assert.equal(
-        resultBufferOne[2],
-        consumerID,
-        "Error: Missing or Invalid ownerID"
+      resultBufferOne[2],
+      consumerID,
+      "Error: Missing or Invalid ownerID"
     );
     assert.equal(resultBufferTwo[5], 7, "Error: Invalid state");
     assert.equal(resultBufferTwo[8], consumerID, "Error: Invalid consumerID");
@@ -348,7 +342,9 @@ contract("SupplyChain", function (accounts) {
     const supplyChain = await SupplyChain.deployed();
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
-    const resultBufferOne = await supplyChain.fetchItemBufferOne(upc, { from: accounts[5] });
+    const resultBufferOne = await supplyChain.fetchItemBufferOne(upc, {
+      from: accounts[5],
+    });
 
     // Verify the result set:
     assert.equal(resultBufferOne[0], sku);
@@ -366,7 +362,9 @@ contract("SupplyChain", function (accounts) {
     const supplyChain = await SupplyChain.deployed();
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
-    const resultBufferTwo = await supplyChain.fetchItemBufferTwo(upc, { from: accounts[6] });
+    const resultBufferTwo = await supplyChain.fetchItemBufferTwo(upc, {
+      from: accounts[6],
+    });
 
     // Verify the result set:
     assert.equal(resultBufferTwo[0], sku);

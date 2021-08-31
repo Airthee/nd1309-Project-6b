@@ -9,7 +9,10 @@ To deploy the contract to a public network, you need to declare some environment
 
 ## Libraries
 
-If I used any library, I will explain why here...
+- web3: To interract with the Ethereum blockchain
+- ganache-cli: To run a local Ethereum node
+- truffle: To simplify all contracts deployment process
+- @truffle/contract: To simplify contracts usage from client side
 
 ## IPFS
 
@@ -17,4 +20,4 @@ Explainations of how did I implemented IPFS for this project...
 
 ## Informations for Udacity
 
-Contract address: [0xfc435753098b00dD84FabE0c40735B393f4909F7](https://rinkeby.etherscan.io/address/0xfc435753098b00dD84FabE0c40735B393f4909F7)
+Contract address: [0xe8AD052B6d69240129544C1B70d3D43B583eFE85](https://rinkeby.etherscan.io/address/0xe8AD052B6d69240129544C1B70d3D43B583eFE85)

@@ -159,24 +159,6 @@ contract SupplyChain is Ownable {
         _;
     }
 
-    // Define a modifier that checks that the caller is a Distributor
-    modifier onlyDistributor() {
-        require(distributorRole.isDistributor(msg.sender));
-        _;
-    }
-
-    // Define a modifier that checks that the caller is a Retailer
-    modifier onlyRetailer() {
-        require(retailerRole.isRetailer(msg.sender));
-        _;
-    }
-
-    // Define a modifier that checks that the caller is a Consumer
-    modifier onlyConsumer() {
-        require(consumerRole.isConsumer(msg.sender));
-        _;
-    }
-
     // In the constructor set 'owner' to the address that instantiated the contract
     // and set 'sku' to 1
     // and set 'upc' to 1
@@ -307,31 +289,23 @@ contract SupplyChain is Ownable {
         emit Shipped(_upc);
     }
 
-    // Define a function that allow the distributor to add a new retailer to the roles
-    function addRetailer(address account) public onlyDistributor {
-        retailerRole.addRetailer(account);
-    }
-
     // Define a function 'receiveItem' that allows the retailer to mark an item 'Received'
     // Use the above modifiers to check if the item is shipped
     function receiveItem(uint256 _upc)
         public
         shipped(_upc)
-        onlyRetailer
     {
         // Update the appropriate fields - ownerID, retailerID, itemState
         Item storage item = items[_upc];
         item.ownerID = msg.sender;
         item.retailerID = msg.sender;
         item.itemState = State.Received;
+
+        // Add retailer to roles
+        retailerRole.addRetailer(msg.sender);
         
         // Emit the appropriate event
         emit Received(_upc);
-    }
-
-    // Define a function that allow the retailer to add a new consumer to the roles
-    function addConsumer(address account) public onlyRetailer {
-        consumerRole.addConsumer(account);
     }
 
     // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
@@ -339,13 +313,15 @@ contract SupplyChain is Ownable {
     function purchaseItem(uint256 _upc)
         public
         received(_upc)
-        onlyConsumer
     {
         // Update the appropriate fields - ownerID, consumerID, itemState
         Item storage item = items[_upc];
         item.ownerID = msg.sender;
         item.consumerID = msg.sender;
         item.itemState = State.Purchased;
+
+        // Add consumer to roles
+        consumerRole.addConsumer(msg.sender);
         
         // Emit the appropriate event
         emit Purchased(_upc);
