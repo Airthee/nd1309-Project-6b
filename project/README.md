@@ -42,7 +42,8 @@ Then, you can use a tool like [Pinata](https://app.pinata.cloud/) to pin your CI
 ## Informations for Udacity
 
 Contract address: [0xe8AD052B6d69240129544C1B70d3D43B583eFE85](https://rinkeby.etherscan.io/address/0xe8AD052B6d69240129544C1B70d3D43B583eFE85)
-Front hosted on IPFS Network : [ipns://k51qzi5uqu5dm5ssp4btri6pz7btytz9xz0ht96msn2ayoxk01sjsglz1k1ljz](ipns://k51qzi5uqu5dm5ssp4btri6pz7btytz9xz0ht96msn2ayoxk01sjsglz1k1ljz)
+
+Front hosted on IPFS Network : [ipns://k51qzi5uqu5dm5ssp4btri6pz7btytz9xz0ht96msn2ayoxk01sjsglz1k1ljz](https://k51qzi5uqu5dm5ssp4btri6pz7btytz9xz0ht96msn2ayoxk01sjsglz1k1ljz.ipns.dweb.link/)
 
 Transactions:
 * TransferOwnership - 0x9f5d77d1bc874ff84a779ed03ce6f9c72aa84a31e2e84661e584f24b3d6754a5
