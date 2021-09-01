@@ -43,3 +43,14 @@ Then, you can use a tool like [Pinata](https://app.pinata.cloud/) to pin your CI
 
 Contract address: [0xe8AD052B6d69240129544C1B70d3D43B583eFE85](https://rinkeby.etherscan.io/address/0xe8AD052B6d69240129544C1B70d3D43B583eFE85)
 Front hosted on IPFS Network : [ipns://k51qzi5uqu5dm5ssp4btri6pz7btytz9xz0ht96msn2ayoxk01sjsglz1k1ljz](ipns://k51qzi5uqu5dm5ssp4btri6pz7btytz9xz0ht96msn2ayoxk01sjsglz1k1ljz)
+
+Transactions:
+* TransferOwnership - 0x9f5d77d1bc874ff84a779ed03ce6f9c72aa84a31e2e84661e584f24b3d6754a5
+* Harvested - 0x2443e83eaeaf78ed091ae575ec27f392f06c376ddc8bbc66829ace28bd33fd53
+* Processed - 0x90daedf6cf04e16ea7c2d7ce857e150aac0bf9610d83fe243de7c57408a4a3dc
+* Packed - 0xc25c9daf310c5fdc9a266f8b301d0927ef59fe1e13e79056388686b94626420a
+* ForSale - 0x464c903b1b6753d30b133c647d5a57213cf325c4f138b2388d0b878ef1ae2057
+* Sold - 0x88b8d39894b0273e88895e029efeeb9db691c6b9143eea4649724611d4fdea0a
+* Shipped - 0x56bfac08e117b5373d59d814de1c2affc695cbcfceba8efd47d7dfcd80c60207
+* Received - 0xa64b2f4ae7e96cdb172a90e5c588a5fa966bfe895e4b45b0a44b0c8fbe09c06d
+* Purchased - 0xef3407e54c626447891be072436d4cc30fb4fad9b1f48ac33bfc413f98fddcb8
